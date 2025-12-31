@@ -17,7 +17,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Segoe UI", "Hiragino Sans", sans-serif;
+  font-family: "Segoe UI", "Hiragino Sans", "Microsoft YaHei", sans-serif;
   overflow: hidden;
   color: #fff;
 }
@@ -39,20 +39,28 @@ body {
 }
 
 .text {
-  font-size: 30px;
-  line-height: 1.6;
   margin-top: 20px;
+  line-height: 1.6;
   white-space: pre-line;
+}
+
+#text-cn {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+#text-jp {
+  font-size: 22px;
+  opacity: 0.9;
 }
 
 .hidden-btn {
   position: fixed;
-  right: 6px;
-  bottom: 6px;
-  width: 12px;
-  height: 12px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 50%;
+  right: 0;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  background: transparent;
   cursor: pointer;
   z-index: 10;
 }
@@ -66,11 +74,19 @@ body {
 }
 
 @keyframes floatUp {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-120vh); opacity: 0; }
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
 }
 
-audio { display: none; }
+audio {
+  display: none;
+}
 </style>
 </head>
 
@@ -82,23 +98,33 @@ audio { display: none; }
 
 <div class="container">
   <div class="heart">❤️</div>
-  <div class="text" id="text">
+
+  <div class="text">
+    <div id="text-cn">
 元旦快乐 🎆
+    </div>
+
+    <div id="text-jp">
 あけましておめでとう 🎍
+    </div>
   </div>
 </div>
 
+<!-- 隐藏按钮（右下角） -->
 <div class="hidden-btn" onclick="confess()"></div>
 
 <script>
 function confess() {
-  document.getElementById("text").innerText =
+  document.getElementById("text-cn").innerText =
 `其实……
 我喜欢你 ❤️
-実は……君のことが好きです
 
 2025，请多关照，
-新的一年，也想和你一起
+新的一年，也想和你一起`;
+
+  document.getElementById("text-jp").innerText =
+`実は……君のことが好きです
+
 2025年も、よろしくね。
 これからも一緒にいられたら嬉しいです。`;
 
@@ -118,6 +144,7 @@ function createHeart() {
 
 setInterval(createHeart, 500);
 
+// 兼容浏览器：首次点击后播放音乐
 document.body.addEventListener("click", () => {
   document.getElementById("bgm").play();
 }, { once: true });
